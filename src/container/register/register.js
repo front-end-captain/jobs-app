@@ -33,7 +33,6 @@ class Register extends Component {
     }
     handleRegister () {
         this.props.register( this.state );
-        console.log( this.state );
     }
     render () {
         return (
@@ -42,17 +41,17 @@ class Register extends Component {
                 <Logo/>
                 <WingBlank>
                     <List>
-                        { this.props.msg ? <p className="error-msg">{ this.props.msg }</p> : null }
-                        <InputItem onChange={ val => this.handleChange( "user", val ) } type="text">用户</InputItem>
+                        <InputItem onChange={ val => this.handleChange( "user", val ) } type="text" autoFocus>用户</InputItem>
                         <InputItem onChange={ val => this.handleChange( "pwd", val ) } type="password">密码</InputItem>
                         <InputItem onChange={ val => this.handleChange( "confirmPwd", val ) } type="password">密码</InputItem>
                     </List>
+                    { this.props.msg ? <p className="error-msg">{ this.props.msg }</p> : null }
                     <WhiteSpace/>
                     <List renderHeader="身份">
-                        <RadioItem checked={ this.state.type == "genius" } onChange={ () => this.handleChange( "type", "genius" ) } >
+                        <RadioItem checked={ this.state.type === "genius" } onChange={ () => this.handleChange( "type", "genius" ) } >
                             牛人
                         </RadioItem>
-                        <RadioItem checked={ this.state.type == "boss" } onChange={ () => this.handleChange( "type", "boss" ) }>
+                        <RadioItem checked={ this.state.type === "boss" } onChange={ () => this.handleChange( "type", "boss" ) }>
                             BOSS
                         </RadioItem>
                     </List>

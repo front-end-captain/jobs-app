@@ -25,6 +25,7 @@ let store = createStore( reducer, compose(
 	window.devToolsExtension ? window.devToolsExtension() : () => {}
 ));
 
+// 测试用例
 function Boss () {
 	return <h2>Boss 页面</h2>
 }

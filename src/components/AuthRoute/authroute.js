@@ -1,8 +1,16 @@
 import React, { Component } from 'react'; 
 import axios from "axios";
 import { withRouter } from "react-router";
+import { connect } from 'react-redux';
+
+import { loadData } from "./../../redux/user.redux"
 
 
+@withRouter
+@connect(
+    state => state.user,
+    { loadData }
+)
 class AuthRoute extends Component {
     componentDidMount () {
         // 获取用户信息
@@ -18,14 +26,15 @@ class AuthRoute extends Component {
         }
         
         axios.get( "/user/info" ).then( ( response ) => {
-            if ( response.status == 200 ) {
+            if ( response.status === 200 ) {
 
                 // 存在用户登录信息
-                if ( response.data.code == 0 ) {
+                if ( response.data.code === 0 ) {
                     console.log( this.props.history );
+                    this.props.loadData( response.data.data );;
                 }
                 // 不存在用户登录信息 跳转至 login 页面
-                else if (  response.data.code == 1 ) {
+                else if (  response.data.code === 1 ) {
                     this.props.history.push( "/login" ) ;
                 }
             }
@@ -40,4 +49,4 @@ class AuthRoute extends Component {
     } 
 }
 
-export default withRouter( AuthRoute );
+export default AuthRoute ;
