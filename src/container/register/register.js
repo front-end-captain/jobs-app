@@ -4,6 +4,7 @@ import { List, InputItem, WingBlank, WhiteSpace, Button, Radio } from "antd-mobi
 
 import { register } from "./../../redux/user.redux";
 import Logo from "./../../components/Logo/logo";
+import { Redirect } from 'react-router-dom';
 
 const RadioItem = Radio.RadioItem;
 
@@ -37,22 +38,28 @@ class Register extends Component {
     render () {
         return (
             <div>
+                { this.props.redirectTo ? <Redirect to={ this.props.redirectTo } /> : null }
                 <Logo/>
-                <List>
-                    { this.props.msg ? <p className="error-msg">{ this.props.msg }</p> : null }
-                    <InputItem onChange={ val => this.handleChange( "user", val ) } type="text">用户</InputItem>
-                    <InputItem onChange={ val => this.handleChange( "pwd", val ) } type="password">密码</InputItem>
-                    <InputItem onChange={ val => this.handleChange( "confirmPwd", val ) } type="password">密码</InputItem>
+                <WingBlank>
+                    <List>
+                        { this.props.msg ? <p className="error-msg">{ this.props.msg }</p> : null }
+                        <InputItem onChange={ val => this.handleChange( "user", val ) } type="text">用户</InputItem>
+                        <InputItem onChange={ val => this.handleChange( "pwd", val ) } type="password">密码</InputItem>
+                        <InputItem onChange={ val => this.handleChange( "confirmPwd", val ) } type="password">密码</InputItem>
+                    </List>
                     <WhiteSpace/>
-                    <RadioItem checked={ this.state.type == "genius" } onChange={ () => this.handleChange( "type", "genius" ) } >
-                        牛人
-                    </RadioItem>
-                    <RadioItem checked={ this.state.type == "boss" } onChange={ () => this.handleChange( "type", "boss" ) }>
-                        BOSS
-                    </RadioItem>
+                    <List renderHeader="身份">
+                        <RadioItem checked={ this.state.type == "genius" } onChange={ () => this.handleChange( "type", "genius" ) } >
+                            牛人
+                        </RadioItem>
+                        <RadioItem checked={ this.state.type == "boss" } onChange={ () => this.handleChange( "type", "boss" ) }>
+                            BOSS
+                        </RadioItem>
+                    </List>
+                    <WhiteSpace/>
                     <WhiteSpace/>
                     <Button type="primary" onClick={ this.handleRegister }>注册</Button>
-                </List>
+                </WingBlank>
             </div>
         )
     }

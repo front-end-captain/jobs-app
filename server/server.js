@@ -1,6 +1,7 @@
 const express = require( "express" );
 
-
+const bodyParser = require( "body-parser" );
+const cookieParser = require( "cookie-parser" );
 const userRouter = require( "./user" );
 
 const PORT = 8080;
@@ -12,6 +13,8 @@ app.use( function ( request, response, next ) {
 	next();
 });
 
+app.use( cookieParser() );
+app.use( bodyParser.json() );
 app.use( "/user", userRouter );
 
 

@@ -15,7 +15,6 @@ class Login extends Component {
         return (
             <div>
                 <Logo></Logo>
-                <h2>登录页</h2>
                 <WingBlank>
                     <List>
                         <InputItem>用户</InputItem>
@@ -23,7 +22,11 @@ class Login extends Component {
                         <InputItem>密码</InputItem>
                     </List>
                     <WhiteSpace/>
+                    <WhiteSpace/>
+                    <WhiteSpace/>
                     <Button type="primary">登录</Button>
+                    <WhiteSpace/>
+                    <WhiteSpace/>
                     <WhiteSpace/>
                     <Button type="primary" onClick={ this.register }>注册</Button>
                 </WingBlank>
