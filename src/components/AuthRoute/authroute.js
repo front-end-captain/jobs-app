@@ -30,7 +30,6 @@ class AuthRoute extends Component {
 
                 // 存在用户登录信息
                 if ( response.data.code === 0 ) {
-                    console.log( this.props.history );
                     this.props.loadData( response.data.data );;
                 }
                 // 不存在用户登录信息 跳转至 login 页面

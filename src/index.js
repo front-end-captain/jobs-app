@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { 
 	BrowserRouter as Router,
 	Route,
-	Redirect,
 	Switch
 } from "react-router-dom"
 
@@ -19,6 +18,9 @@ import "./index.css"
 import Login from "./container/Login/login";
 import Register from "./container/register/register"
 import AuthRoute from "./components/AuthRoute/authroute"
+import BossInfo from "./container/BossInfo/bossinfo"
+import GeniusInfo from "./container/GeniusInfo/geniusinfo"
+
 
 let store = createStore( reducer, compose(
 	applyMiddleware( thunk ),
@@ -26,20 +28,22 @@ let store = createStore( reducer, compose(
 ));
 
 // 测试用例
-function Boss () {
-	return <h2>Boss 页面</h2>
-}
+// function Boss () {
+// 	return <h2>Boss 页面</h2>
+// }
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
 			<div>
 				<AuthRoute></AuthRoute>
-				<Route path="/boss" component={ Boss }></Route>
-				<Route path="/login" component={ Login }></Route>
-				<Route path="/register" component={ Register }></Route>
+				<Switch>
+					<Route path="/bossinfo" component={ BossInfo }></Route>
+					<Route path="/geniusinfo" component={ GeniusInfo }></Route>
+					<Route path="/login" component={ Login }></Route>
+					<Route path="/register" component={ Register }></Route>
+				</Switch>
 			</div>
 		</Router>
 	</Provider>,
 	document.getElementById( "root" )
 )
-

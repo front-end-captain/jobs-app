@@ -54,8 +54,22 @@ Router.post( "/register", function ( request, response ) {
         })
     })
 });
+Router.post( "/update", function ( request, response ) {
+    const { userid } = request.cookies;
+    if ( !userid ) {
+        return response.json.dumps( { code: 1 } );
+    }
+    const body = request.body;
+    User.findByIdAndUpdate( userid, body, function ( error, doc ) {
+        const data = Object.assign( {}, {
+            user: doc.user,
+            type: doc.type
+        }, body );
+        return response.json( { code: 0, data } );
+    })
+})
 
-// 测试 用例
+// 页面初始化 返回用户信息
 Router.get( "/info", function ( request, response ) {
     const { userid } = request.cookies;
     if ( !userid ) {
@@ -71,7 +85,6 @@ Router.get( "/info", function ( request, response ) {
             return response.json( { code: 0, data: doc } );
         }
     })
-   
 });
 
 function md5Pwd ( pwd ) {
