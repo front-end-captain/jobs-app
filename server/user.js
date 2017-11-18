@@ -12,9 +12,10 @@ const _filter = { "pwd": 0, "__v": 0 }
 
 // 测试 用例 
 Router.get( "/list", function ( request, response ) {
+    let type = request.query.type;
     // User.remove( {}, function ( e, d ) {});
-    User.find({}, function ( error, doc ) {
-        return response.json( doc );
+    User.find({ type }, function ( error, doc ) {
+        return response.json( { code: 0, data: doc } );
     });
 });
 

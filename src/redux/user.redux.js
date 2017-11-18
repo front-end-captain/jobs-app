@@ -9,6 +9,7 @@ import { getRedirectPath } from "./../utils";
 const LOAD_DATA = "LOAD_DATA";
 const AUTH_SUCCESS = "AUTH_SUCCESS";
 const ERROR_MSG = "ERROR_MSG";
+const LOGOUT =  "LOGOUT";
 
 const initState = {
     redirectTo: "",
@@ -37,6 +38,11 @@ export function user ( state = initState, action ) {
                 isAuth: false,
                 msg: action.payload
             }
+        case LOGOUT:
+            return {
+                ...initState,
+                redirectTo: "/login"
+            }
         default:
             return state;
     }
@@ -61,7 +67,11 @@ export function loadData ( data ) {
         payload: data
     }
 }
-
+export function logoutSubmit () {
+    return {
+        type: LOGOUT
+    }
+}
 
 // dispatcher function
 /**

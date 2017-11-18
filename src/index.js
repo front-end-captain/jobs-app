@@ -20,7 +20,7 @@ import Register from "./container/register/register"
 import AuthRoute from "./components/AuthRoute/authroute"
 import BossInfo from "./container/BossInfo/bossinfo"
 import GeniusInfo from "./container/GeniusInfo/geniusinfo"
-
+import Dashboard from "./components/DashBoard/dashboard"
 
 let store = createStore( reducer, compose(
 	applyMiddleware( thunk ),
@@ -30,6 +30,9 @@ let store = createStore( reducer, compose(
 // 测试用例
 // function Boss () {
 // 	return <h2>Boss 页面</h2>
+// }
+// function Dashboard () {
+// 	return <h2>Dashboard</h2>
 // }
 ReactDOM.render(
 	<Provider store={store}>
@@ -41,6 +44,7 @@ ReactDOM.render(
 					<Route path="/geniusinfo" component={ GeniusInfo }></Route>
 					<Route path="/login" component={ Login }></Route>
 					<Route path="/register" component={ Register }></Route>
+					<Route component={ Dashboard }></Route>
 				</Switch>
 			</div>
 		</Router>
