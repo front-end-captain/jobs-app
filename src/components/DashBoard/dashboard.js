@@ -7,7 +7,7 @@ import NavLinkBar from "./../NavLinkBar/navlinkbar";
 import Boss from "./../Boss/boss"
 import Genius from "./../Genius/genius"
 import User from "./../User/user"
-
+import { getMsgList, receiveMsg }  from "./../../redux/chat.redux"
 // function Boss () {
 //     return <h2>Boss首页</h2>
 // }
@@ -21,10 +21,11 @@ function Msg () {
 //     return <h2>User</h2>
 // }
 @connect(
-    state => state
+    state => state,
+    { getMsgList, receiveMsg }
 )
 class DashBoard extends Component {
-    
+
     render () {
         const user    = this.props.user;
         const navList = [

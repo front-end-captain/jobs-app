@@ -6,6 +6,7 @@ const Router = express.Router();
 
 const model = require( "./model" );
 const User = model.getModel( "user" );
+const Chat = model.getModel( "chat" );
 
 // 数据查询过滤条件
 const _filter = { "pwd": 0, "__v": 0 }
@@ -18,7 +19,20 @@ Router.get( "/list", function ( request, response ) {
         return response.json( { code: 0, data: doc } );
     });
 });
-
+Router.get( "/getmsglist", function ( request, response ) {
+    const userid = request.cookies.userid;
+    User.find( {}, function ( error, userdoc ) {
+        let users = {};
+        userdoc.forEach( v => {
+            users[ v._id ] = { name: v.user, avatar: v.avatar };
+        })
+        Chat.find( {'$or':[{from:userid}, {to:userid}]}, function ( error, doc ) {
+            if ( !error ) {
+                return response.json( { code: 0, data: doc, users: users } );
+            }
+        })
+    })
+})
 // 登录
 Router.post( "/login", function ( request, response ) {
     console.log( request.body );

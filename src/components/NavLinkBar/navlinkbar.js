@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { TabBar } from "antd-mobile"
+import { connect } from "react-redux";
 
 @withRouter
+@connect(
+    state => state.chat
+)
 class NavLinkBar extends Component {
     
     render () {
@@ -21,6 +25,7 @@ class NavLinkBar extends Component {
                             onPress={ () => {
                                 this.props.history.push( v.path );
                             }}
+                            badge={ v.path == "/msg" ? this.props.unread : "" }
                         >
                         </TabBar.Item>
                     ))

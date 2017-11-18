@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
-import { Card, WhiteSpace, WingBlank } from "antd-mobile"
+import { Card, WhiteSpace, WingBlank } from "antd-mobile";
+import { withRouter } from "react-router-dom";
 
+@withRouter
 class UserCard extends Component {
+    constructor ( props ) {
+        super( props );
+        this.handleClick = this.handleClick.bind( this );
+    }
+    handleClick ( v ) {
+        this.props.history.push( "/chat/" + v._id );
+    }
     render () {
         return (
             <WingBlank>
@@ -11,7 +20,7 @@ class UserCard extends Component {
     
                     // 只显示有头像的用户
                     v.avatar
-                    ?   <Card key={ i }>
+                    ?   <Card key={ i } onClick={ () => this.handleClick( v ) }>
                             <Card.Header
                                 title={ v.user }
                                 thumb={ require( `./../images/${v.avatar}.png` ) }
