@@ -2,21 +2,39 @@ import axios from "axios";
 import { getRedirectPath } from "./../utils";
 
 
-// action type const
-// const REGISTER_SUCCESS = "REGISTER_SUCCESS";
-// const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-
+/**
+ *      action type
+ */
+// 加载用户信息 /user/info
 const LOAD_DATA = "LOAD_DATA";
+
+// 用户认证 login / register / update 成功
 const AUTH_SUCCESS = "AUTH_SUCCESS";
+
+// 失败的操作 login / register / update 失败
 const ERROR_MSG = "ERROR_MSG";
+
+// 用户注销
 const LOGOUT =  "LOGOUT";
 
+
+/**
+ *      reducer
+ */
+
+/**
+ * redirectTo 跳转路径  包括认证成功后跳转的路径以及用户注销登录后的跳转路径
+ * msg 错误信息
+ * user 用户名
+ * type 用户类型 boss or genius
+ * isAuth 用户是否已经认证 默认为 false
+ */
 const initState = {
     redirectTo: "",
     msg: "",
     user: "",
     type: ""
-}
+};
 // reducer function
 export function user ( state = initState, action ) {
     switch ( action.type ) {
@@ -48,7 +66,11 @@ export function user ( state = initState, action ) {
     }
 };
 
-// action creator function
+
+
+/**
+ *      action creator
+ */
 function errorMsg ( msg ) {
     return {
         payload: msg,
@@ -73,19 +95,25 @@ export function logoutSubmit () {
     }
 }
 
-// dispatcher function
+
+
+/**
+ *       dispatcher
+ */
 /**
  * @description: 用户信息更新
- * @param {Object} data
+ * @param {Object} data 更新的数据
  */
 export function update ( data ) {
     return dispatch => {
         axios.post( "/user/update", data ).then( ( response ) => {
+
             console.log( "服务端返回更新响应信息", response.data );
 
             if ( response.status === 200 && response.data.code === 0 ) {
                 dispatch( authSuccess( response.data.data ) );
             }
+
             // 更新失败
             else {
                 dispatch( errorMsg( response.data.msg ) );
@@ -104,12 +132,14 @@ export function login ( { user, pwd } ) {
     return dispatch => {
         axios.post( "/user/login", { user, pwd } )
             .then( ( response ) => {
+
                 console.log( "服务端返回登录响应信息", response.data );
 
                 // 登录成功
                 if ( response.status === 200 && response.data.code === 0 ) {
                     dispatch( authSuccess( response.data.data ) );
                 }
+
                 // 登录失败
                 else {
                     dispatch( errorMsg( response.data.msg ) );

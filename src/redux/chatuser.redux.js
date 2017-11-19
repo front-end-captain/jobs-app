@@ -4,7 +4,7 @@ import axios from "axios";
 const USER_LIST = "USER_LIST";
 
 
-// reuder
+// reducer
 const initState = {
     userlist: []
 }

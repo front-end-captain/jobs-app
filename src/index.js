@@ -23,7 +23,7 @@ import GeniusInfo from "./container/GeniusInfo/geniusinfo"
 import Dashboard from "./components/DashBoard/dashboard"
 import Chat from "./components/Chat/chat"
 
-let store = createStore( reducer, compose(
+const store = createStore( reducer, compose(
 	applyMiddleware( thunk ),
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ));
