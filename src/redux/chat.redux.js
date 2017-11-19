@@ -21,12 +21,14 @@ export function chat ( state = initState, action ) {
                 ...state,
                 chatmsg: action.payload.msgs,
                 users: action.payload.users,
-                unread: action.payload.msgs.filter( v => !v.read ).length
+                unread: action.payload.msgs.filter( v => !v.read && v.to === action.payload.userid  ).length
             }
         case MSG_RECEIVE:
+            const n = action.payload.msgs.to === action.payload.userid ? 1 : 0;
             return {
                 ...state,
-                chatmsg: [ ...state.chatmsg, action.payload ]
+                chatmsg: [ ...state.chatmsg, action.payload.msgs ], 
+                unread: state.unread + n
             }
 
         // case MSG_READ:
@@ -35,17 +37,18 @@ export function chat ( state = initState, action ) {
             return state;        
     }
 }
-function msgReceive ( msgs ) {  
-    return { type: MSG_RECEIVE, payload: msgs };
+function msgReceive ( msgs, userid ) {  
+    return { type: MSG_RECEIVE, payload: { msgs, userid } };
 }
-function msglist ( msgs, users ) {
-    return { type: MSG_LIST, payload: { msgs, users } };
+function msglist ( msgs, users, userid ) {
+    return { type: MSG_LIST, payload: { msgs, users, userid } };
 }
 export function receiveMsg () {
-    return dispatch => {
+    return ( dispatch, getState ) => {
         socket.on( "receivemsg", function ( data ) {
-            console.log( data );
-            dispatch( msgReceive( data ) );
+            // console.log( data );
+            const userId = getState().user._id;
+            dispatch( msgReceive( data, userId ) );
         })
     }
 }
@@ -56,10 +59,11 @@ export function sendMsg ( { from, to, msg } ) {
 }
 
 export function getMsgList () {
-    return dispatch => {
+    return ( dispatch, getState ) => {
         axios.get( "/user/getmsglist" ).then( ( response ) => {
             if ( response.status === 200 && response.data.code === 0 ) {
-                dispatch( msglist( response.data.data, response.data.users ) );
+                const userId = getState().user._id;
+                dispatch( msglist( response.data.data, response.data.users, userId ) );
             }
         })
     }

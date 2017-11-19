@@ -7,6 +7,7 @@ import NavLinkBar from "./../NavLinkBar/navlinkbar";
 import Boss from "./../Boss/boss"
 import Genius from "./../Genius/genius"
 import User from "./../User/user"
+import Msg from "./../Msg/msg"
 import { getMsgList, receiveMsg }  from "./../../redux/chat.redux"
 // function Boss () {
 //     return <h2>Boss首页</h2>
@@ -14,9 +15,9 @@ import { getMsgList, receiveMsg }  from "./../../redux/chat.redux"
 // function Genius () {
 //     return <h2>Genius</h2>
 // }
-function Msg () {
-    return <h2>Msg</h2>
-}
+// function Msg () {
+//     return <h2>Msg</h2>
+// }
 // function User () {
 //     return <h2>User</h2>
 // }
@@ -25,7 +26,12 @@ function Msg () {
     { getMsgList, receiveMsg }
 )
 class DashBoard extends Component {
-
+    componentDidMount () {
+        if ( !this.props.chat.chatmsg.length ) {
+            this.props.getMsgList();
+            this.props.receiveMsg();
+        }
+    }
     render () {
         const user    = this.props.user;
         const navList = [

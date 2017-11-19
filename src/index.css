@@ -18,6 +18,25 @@
 }
 
 /* 聊天页面 */
+#chat-page .am-list {
+    background: none;
+}
+#chat-page .am-list .am-list-body {
+    background: none;
+}
+#chat-page .am-list .am-list-body::after {
+    background: none;
+}
+#chat-page .am-list .am-list-body::before {
+    background: none;
+}
+#chat-page .am-list-item {
+    background: none;
+}
+#chat-page .am-list-item .am-list-content {
+    background-color: aquamarine;
+    border-radius: 10px;
+}
 #chat-page .chat-me .am-list-extra{
 	flex-basis:auto;
 }
