@@ -6,12 +6,16 @@ import { Provider } from "react-redux";
 import { 
 	BrowserRouter as Router,
 	Route,
-	Switch
+	Switch 
 } from "react-router-dom"
 
 
 import reducer from "./reducers"
+
+// 在处理请求或响应之前拦截请求或响应
+// 做出 loading 效果
 import "./config"
+
 import "./index.css"
 
 // import component
@@ -39,7 +43,7 @@ ReactDOM.render(
 	<Provider store={store}>
 		<Router>
 			<div>
-				<AuthRoute></AuthRoute>
+				<AuthRoute />
 				<Switch>
 					<Route path="/bossinfo" component={ BossInfo }></Route>
 					<Route path="/geniusinfo" component={ GeniusInfo }></Route>

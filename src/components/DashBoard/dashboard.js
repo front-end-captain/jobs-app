@@ -40,12 +40,17 @@ class DashBoard extends Component {
             { path: "/msg", text: "消息", icon: "msg", title: "消息列表", component: Msg },
             { path: "/me", text: "我", icon: "user", title: "个人中心", component: User },
         ];
+        
         const pathname = this.props.location.pathname;
-         
+
         return (
             <div>
                 <NavBar mode="dard" className="fixed-header">
-                    { navList.find( v => v.path == pathname ).title }
+                    { 
+                        navList.find( v => v.path == pathname ) 
+                            ? navList.find( v => v.path == pathname ).title 
+                            : null
+                    }
                 </NavBar>
                 <div style={ { marginTop: "45px" }}>
                     <Switch>

@@ -24,27 +24,25 @@ class AuthRoute extends Component {
         if ( publicList.indexOf( this.props.location.pathname ) > -1 ) {
             return;
         }
-        
+
         axios.get( "/user/info" ).then( ( response ) => {
             if ( response.status === 200 ) {
 
                 // 存在用户登录信息
                 if ( response.data.code === 0 ) {
+
+                    // 加载用户信息数据
                     this.props.loadData( response.data.data );;
                 }
                 // 不存在用户登录信息 跳转至 login 页面
-                else if (  response.data.code === 1 ) {
+                else if ( response.data.code === 1 ) {
                     this.props.history.push( "/login" ) ;
                 }
             }
         })
     }
     render ( ) {
-        return (
-            <div>
-               
-            </div>
-        )
+        return null;
     } 
 }
 
