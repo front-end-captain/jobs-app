@@ -17,7 +17,8 @@ class Chat extends Component {
         this.state = {
             text: "",
             showEmoji: false
-        }
+        };
+
         this.handleSubmit = this.handleSubmit.bind( this );
         this.fixCarousel = this.fixCarousel.bind( this );
     }
@@ -37,16 +38,25 @@ class Chat extends Component {
         const to = this.props.match.params.user;
         const msg = this.state.text;
         this.props.sendMsg( { from, to, msg } );
-        // socket.emit( "sendmsg", { text: this.state.text } );
         this.setState({ text: "" });
+        
+
+        // socket.emit( "sendmsg", { text: this.state.text } );
     }
     render () {
-        // console.log( this.props );
+
+        // 获取路径参数中的 用户 id 这个 id 是聊天对话中接收方的 用户 id 即 targetid
         const userid = this.props.match.params.user;
+
+        // 获取 redux 中的用户信息
         const users = this.props.chat.users;
+
+        // 当前聊天对话的 id 有发送方和接收方两者的 id 拼接而成
         const chatid = getChatId( userid, this.props.user._id );
-        const chatmsg = this.props.chat.chatmsg.filter( (v, i ) => {
-            return v.chatid == chatid;
+
+        // 对所有聊天信息进行过滤 过滤出
+        const chatmsg = this.props.chat.chatmsg.filter( ( v, i ) => {
+            return v.chatid === chatid;
         });
 
         const emoji = '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😜 😝 😛 🤑 🤗 🤓 😎 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😤 😠 😡 😶 😐 😑 😯 😦 😧 😮 😲 😵 😳 😱 😨 😰 😢 😥 😭 😓 😪 😴 🙄 🤔 😬 🤐 😷 🤒 🤕 😈 👿 👹 👺 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🙌 👏 🙏 👍 👎 👊 ✊ 🤘 👌 👈 👉 👆 👇 ✋  🖐 🖖 👋  💪 🖕 ✍️  💅 🖖 💄 💋 👄 👅 👂 👃 👁 👀 '
