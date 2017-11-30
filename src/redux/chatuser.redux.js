@@ -30,7 +30,7 @@ function userlist ( data ) {
 export function getUserList ( type ) {
     return ( dispatch ) => {
         axios.get( "/user/list?type=" + type ).then( ( response ) => {
-            if ( response.status == 200 && response.data.code == 0 ) {
+            if ( response.status === 200 && response.data.code === 0 ) {
                 dispatch( userlist( response.data.data ) );
             }
         })

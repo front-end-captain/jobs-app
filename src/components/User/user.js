@@ -41,7 +41,7 @@ class User extends Component {
                                 /> 
                             }
                             title={ this.props.user }
-                            message={ props.type == "boss" ? props.company  : null }
+                            message={ props.type === "boss" ? props.company  : null }
                         />
                         <WingBlank>
                             <List renderHeader="简介" >

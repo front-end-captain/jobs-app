@@ -21,11 +21,11 @@ class NavLinkBar extends Component {
                             title={ v.title }
                             icon={ { uri: require( `./img/${v.icon}.png` )} }
                             selectedIcon={ { uri: require( `./img/${v.icon}-active.png` ) } }
-                            selected={ pathname == v.path }
+                            selected={ pathname === v.path }
                             onPress={ () => {
                                 this.props.history.push( v.path );
                             }}
-                            badge={ v.path == "/msg" ? this.props.unread : "" }
+                            badge={ v.path === "/msg" ? this.props.unread : "" }
                         >
                         </TabBar.Item>
                     ))

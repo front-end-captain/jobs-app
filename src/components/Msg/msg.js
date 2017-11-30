@@ -20,7 +20,6 @@ class Msg extends Component {
             let b_last = b[b.length - 1].create_time;
             return b_last - a_last;
         });
-        console.log( chatList );
         if ( !chatList.length ) {
             return null;
         }

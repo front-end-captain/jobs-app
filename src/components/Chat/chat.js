@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { InputItem, List, NavBar, Icon, WhiteSpace, Grid } from "antd-mobile"
 import { connect } from "react-redux";
 
-import { getMsgList, sendMsg, receiveMsg }  from "./../../redux/chat.redux"
+import { getMsgList, sendMsg, receiveMsg, readMsg }  from "./../../redux/chat.redux"
 import { getChatId } from "./../../utils"
 import { setTimeout } from 'timers';
 
 
 @connect(
     state => state,
-    { getMsgList, sendMsg, receiveMsg }
+    { getMsgList, sendMsg, receiveMsg, readMsg }
 )
 class Chat extends Component {
     constructor ( props ) {
@@ -27,6 +27,12 @@ class Chat extends Component {
             this.props.getMsgList();
             this.props.receiveMsg();
         }
+    }
+
+    // 在组件卸载时更新未读消息的数量
+    componentWillUnmount ( ) {
+        const to = this.props.match.params.user;
+        this.props.readMsg( to )
     }
     fixCarousel () {
         setTimeout( function () {
@@ -77,7 +83,7 @@ class Chat extends Component {
                 <WhiteSpace /><WhiteSpace />
                 { chatmsg.map( v => {
                     const avatar = require( `./../images/${users[v.from].avatar}.png` );
-                    return v.from == userid 
+                    return v.from === userid 
                         ?   ( 
                                 <List key={ v._id }>
                                     <List.Item thumb={ avatar }>
@@ -87,7 +93,7 @@ class Chat extends Component {
                             )
                         :   ( 
                                 <List key={ v._id }>
-                                    <List.Item className="chat-me" extra={<img src={ avatar } />}>
+                                    <List.Item className="chat-me" extra={<img src={ avatar } alt="用户头像" />}>
                                         { v.content }
                                     </List.Item>
                                 </List>
@@ -109,6 +115,7 @@ class Chat extends Component {
                                             this.setState({ showEmoji: !this.state.showEmoji }); 
                                             this.fixCarousel(); 
                                         }}
+                                        role="img"
                                     >😃</span>
                                     <span onClick={ () => this.handleSubmit() }>发送</span> 
                                 </div>

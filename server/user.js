@@ -138,6 +138,20 @@ Router.get( "/info", function ( request, response ) {
 });
 
 /**
+ * @description: 修改未读消息数量
+ */
+Router.post( "/readmsg", function ( request, response ) {
+    const userid = request.cookies.userid;
+    const { from } = request.body;
+    Chat.update( { from, to: userid }, { "$set": { read: true } }, { "multi": true }, function ( error, doc ) {
+        if ( !error ) {
+            return response.json( { code: 0, num: doc.nModified } );
+        }
+        return response.json( { code: 1, msg: "修改失败" } );
+    })
+})
+
+/**
  * @description: 对用户密码进行二次 md5 加密
  * @param {String} pwd 密码
  * @returns {String}  二次加密后的密码

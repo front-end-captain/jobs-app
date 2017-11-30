@@ -3,12 +3,17 @@ import io from "socket.io-client"
 
 const socket = io( "ws://localhost:8080" );
 
-// action type
+/**
+ *      action type
+ */
 const MSG_LIST  = "MSG_LIST";          // 聊天列表
 const MSG_RECEIVE = "MSG_RECEIVE";     // 读取信息
 const MSG_READ = "MSG_READ";           // 标志信息已读
 
 
+/**
+ *      reducer
+ */
 const initState = {
     chatmsg: [],
     unread: 0,
@@ -31,7 +36,13 @@ export function chat ( state = initState, action ) {
                 unread: state.unread + n
             }
 
-        // case MSG_READ:
+        case MSG_READ:
+            const from = action.payload.from;
+            return {
+                ...state,
+                chatmsg:  state.chatmsg.map( v => ( { ...v, read: from === v.from ? true : v.read } ) ),
+                unread: state.unread - action.payload.num
+            }
 
         default:
             return state;        
@@ -43,10 +54,22 @@ function msgReceive ( msgs, userid ) {
 function msglist ( msgs, users, userid ) {
     return { type: MSG_LIST, payload: { msgs, users, userid } };
 }
+function msgRead ( from, to, num  ) {
+    return { type: MSG_READ, payload: { from, to, num } };
+}
+export function readMsg ( from ) {
+    return ( dispatch, getState ) => {
+        axios.post( "/user/readmsg", { from } ).then( ( response ) => {
+            const userid = getState().user._id;
+            if ( response.status === 200 && response.data.code === 0 ) {
+                dispatch( msgRead( userid, from, response.data.num ) )
+            }
+        })
+    }
+}
 export function receiveMsg () {
     return ( dispatch, getState ) => {
         socket.on( "receivemsg", function ( data ) {
-            // console.log( data );
             const userId = getState().user._id;
             dispatch( msgReceive( data, userId ) );
         })
