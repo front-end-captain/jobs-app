@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { withRouter, Route, Switch } from "react-router-dom";
+import { withRouter, Route } from "react-router-dom";
 import { NavBar }  from "antd-mobile";
+import QueueAnim from "rc-queue-anim"
 
 import NavLinkBar from "./../NavLinkBar/navlinkbar";
 import Boss from "./../Boss/boss"
@@ -42,9 +43,12 @@ class DashBoard extends Component {
         ];
         
         const pathname = this.props.location.pathname;
-
+        const currentPage = navList.find( v => v.path === pathname );
+         
         return (
             <div>
+
+                {/* 顶部导航头 */}
                 <NavBar mode="dard" className="fixed-header">
                     { 
                         navList.find( v => v.path === pathname ) 
@@ -52,15 +56,17 @@ class DashBoard extends Component {
                             : null
                     }
                 </NavBar>
+
+                {/* 内容页面 */}
                 <div style={ { marginTop: "45px" }}>
-                    <Switch>
-                        {
-                            navList.map( ( v, i ) => (
-                                <Route key={ i } path={ v.path } component={ v.component }></Route>
-                            ))
-                        }
-                    </Switch>
+
+                    <QueueAnim type="scaleY" duration={1000}>
+                        <Route key={ currentPage.path } path={ currentPage.path } component={ currentPage.component }></Route>
+                    </QueueAnim>
+
                 </div>
+
+                {/* 底部 tab bar */}
                 <NavLinkBar data={ navList }></NavLinkBar>
             </div>
         )
