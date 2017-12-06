@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { withRouter, Route } from "react-router-dom";
+import { withRouter, Route, Redirect } from "react-router-dom";
 import { NavBar }  from "antd-mobile";
 import QueueAnim from "rc-queue-anim"
 
@@ -10,6 +10,7 @@ import Genius from "./../Genius/genius"
 import User from "./../User/user"
 import Msg from "./../Msg/msg"
 import { getMsgList, receiveMsg }  from "./../../redux/chat.redux"
+import AuthRoute from "./../AuthRoute/authroute"
 // function Boss () {
 //     return <h2>Boss首页</h2>
 // }
@@ -44,7 +45,12 @@ class DashBoard extends Component {
         
         const pathname = this.props.location.pathname;
         const currentPage = navList.find( v => v.path === pathname );
-         
+        
+        // 404
+        if ( !currentPage ) {
+            return <Redirect to="/" />
+        }
+
         return (
             <div>
 

@@ -12,7 +12,8 @@ import { loadData } from "./../../redux/user.redux"
     { loadData }
 )
 class AuthRoute extends Component {
-    componentDidMount () {
+    componentWillMount () {
+        console.log( "AuthRoute mounted" );
         // 获取用户信息
         // 是否登录
         // 当前 URL 地址 login 页面不要跳转
@@ -33,7 +34,7 @@ class AuthRoute extends Component {
         // 服务端在用户注册成功后  会在客户端种植 cookie   ` response.cookie( "userid", _id );`
         axios.get( "/user/info" ).then( ( response ) => {
             if ( response.status === 200 ) {
-                 
+                console.log( response.data ); 
                 // 存在用户登录信息
                 if ( response.data.code === 0 ) {
 
@@ -53,4 +54,4 @@ class AuthRoute extends Component {
     } 
 }
 
-export default AuthRoute ;
+export default AuthRoute;

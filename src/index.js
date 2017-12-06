@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from "react-redux";
 import { 
 	BrowserRouter as Router,
 	Route,
-	Switch 
+	Switch ,
+	Redirect
 } from "react-router-dom"
 
 
@@ -27,9 +29,9 @@ import GeniusInfo from "./container/GeniusInfo/geniusinfo"
 import Dashboard from "./components/DashBoard/dashboard"
 import Chat from "./components/Chat/chat"
 
-const store = createStore( reducer, compose(
-	applyMiddleware( thunk ),
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+const store = createStore( reducer, composeWithDevTools(
+	applyMiddleware( thunk )
+	// window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ));
 
 // 测试用例
@@ -45,6 +47,7 @@ ReactDOM.render(
 			<div>
 				<AuthRoute />
 				<Switch>
+					<Route exact path="/" component={ Login } />
 					<Route path="/bossinfo" component={ BossInfo }></Route>
 					<Route path="/geniusinfo" component={ GeniusInfo }></Route>
 					<Route path="/login" component={ Login }></Route>
