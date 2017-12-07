@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputItem, List, NavBar, Icon, WhiteSpace, Grid } from "antd-mobile"
+import { InputItem, List, NavBar, Icon, WhiteSpace, Grid, Toast } from "antd-mobile"
 import { connect } from "react-redux";
 import QueueAnim from "rc-queue-anim"
 
@@ -8,6 +8,9 @@ import { getMsgList, sendMsg, receiveMsg, readMsg }  from "./../../redux/chat.re
 import { getChatId } from "./../../utils"
 import { setTimeout } from 'timers';
 
+function showToastNoMask() {
+    Toast.info('发送内容不能为空！', 2, null, false);
+}
 
 @connect(
     state => state,
@@ -45,6 +48,13 @@ class Chat extends Component {
         const from = this.props.user._id;
         const to = this.props.match.params.user;
         const msg = this.state.text;
+
+        // 对发送内容进行非空判断
+        if ( msg.trim() === "" ) {
+            showToastNoMask();
+            return;
+        }
+
         this.props.sendMsg( { from, to, msg } );
         this.setState({ text: "" });
         

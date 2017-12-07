@@ -1,3 +1,4 @@
+const path = require( "path" );
 const express = require( "express" );
 
 const bodyParser = require( "body-parser" );
@@ -53,6 +54,14 @@ app.use( cookieParser() );
 app.use( bodyParser.json() );
 app.use( "/user", userRouter );
 
+app.use( function ( request, response, next ) {
+    if ( request.url.startsWith( "/user/" ) || request.url.startsWith( "/static/" ) ) {
+        return next();
+    } else {
+        response.sendFile( path.resolve( "build/index.html" ) );
+    }
+});
+app.use( "/", express.static( "build" ) );
 
 
 const server = App.listen( PORT, "localhost", function () {

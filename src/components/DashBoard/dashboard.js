@@ -10,7 +10,6 @@ import Genius from "./../Genius/genius"
 import User from "./../User/user"
 import Msg from "./../Msg/msg"
 import { getMsgList, receiveMsg }  from "./../../redux/chat.redux"
-import AuthRoute from "./../AuthRoute/authroute"
 // function Boss () {
 //     return <h2>Boss首页</h2>
 // }
