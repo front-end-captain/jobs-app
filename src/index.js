@@ -5,9 +5,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from "react-redux";
 import { 
-	BrowserRouter as Router,
-	Route,
-	Switch  
+	BrowserRouter as Router 
 } from "react-router-dom"
 
 
@@ -19,14 +17,7 @@ import "./config"
 
 import "./index.css"
 
-// import component
-import Login from "./container/Login/login";
-import Register from "./container/register/register"
-import AuthRoute from "./components/AuthRoute/authroute"
-import BossInfo from "./container/BossInfo/bossinfo"
-import GeniusInfo from "./container/GeniusInfo/geniusinfo"
-import Dashboard from "./components/DashBoard/dashboard"
-import Chat from "./components/Chat/chat"
+import App from "./app";
 
 const store = createStore( reducer, composeWithDevTools(
 	applyMiddleware( thunk )
@@ -40,21 +31,10 @@ const store = createStore( reducer, composeWithDevTools(
 // function Dashboard () {
 // 	return <h2>Dashboard</h2>
 // }
-ReactDOM.render(
+ReactDOM.hydrate(
 	<Provider store={store}>
 		<Router>
-			<div>
-				<AuthRoute />
-				<Switch>
-					<Route exact path="/" component={ Login } />
-					<Route path="/bossinfo" component={ BossInfo }></Route>
-					<Route path="/geniusinfo" component={ GeniusInfo }></Route>
-					<Route path="/login" component={ Login }></Route>
-					<Route path="/register" component={ Register }></Route>
-					<Route path="/chat/:user" component={ Chat }></Route>
-					<Route component={ Dashboard }></Route>
-				</Switch>
-			</div>
+			<App />
 		</Router>
 	</Provider>,
 	document.getElementById( "root" )
