@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { List, Badge } from "antd-mobile"
+import { List, Badge, Result } from "antd-mobile"
 
 @connect(
     state => state
@@ -20,9 +20,17 @@ class Msg extends Component {
             let b_last = b[b.length - 1].create_time;
             return b_last - a_last;
         });
+        
+        const myImg = src => <img src={src} className="spe am-icon am-icon-md" alt="" />;
+        // 当前无聊天内容 不能返回 null 会引起 QueueAnim 的报错
+        // 而是进行用户提示
         if ( !chatList.length ) {
-            return null;
+            return <Result
+                        img={myImg('https://gw.alipayobjects.com/zos/rmsportal/GIyMDJnuqmcqPLpHCSkj.svg')}
+                        title="您还没有和任何人聊过天-_-"
+                    />
         }
+
         return (
             <div>
                 <List>
